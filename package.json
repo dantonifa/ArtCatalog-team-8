@@ -2,8 +2,10 @@
   "name": "artcatalog-team-8",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -27,18 +29,4 @@
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"
   }
-  {
-  "name": "artcatalog-team-8",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "seed": "node seed.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    // your installed packages will appear here
-  }
-}
-
 }

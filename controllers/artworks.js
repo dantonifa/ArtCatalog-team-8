@@ -50,10 +50,28 @@ exports.update = async (req, res, next) => {
   try {
     const result = await getDatabase()
       .collection("artworks")
-      .updateOne({ _id: new ObjectId(req.params.id) }, { $set: req.body });
+      .updateOne(
+        { _id: new ObjectId(req.params.id) },
+        {
+          $set: {
+            title: req.body.title,
+            year: parseInt(req.body.year),
+            period: req.body.period,
+            type: req.body.type,
+            file: req.body.file,
+            artistId: new ObjectId(req.body.artistId),
+          },
+        },
+      );
+
     if (result.matchedCount === 0)
-      return res.status(404).json({ error: "Artwork not found" });
-    res.json({ message: "Artwork updated" });
+      return res.status(404).json({
+        error: "Artwork not found",
+      });
+
+    res.json({
+      message: "Artwork updated",
+    });
   } catch (err) {
     next(err);
   }

@@ -45,7 +45,17 @@ exports.update = async (req, res, next) => {
   try {
     const result = await getDatabase()
       .collection("artists")
-      .updateOne({ _id: new ObjectId(req.params.id) }, { $set: req.body });
+      .updateOne(
+        { _id: new ObjectId(req.params.id) },
+        {
+          $set: {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            birthDate: new Date(req.body.birthDate),
+            country: req.body.country,
+          },
+        },
+      );
     if (result.matchedCount === 0)
       return res.status(404).json({ error: "Artist not found" });
     res.json({ message: "Artist updated" });
