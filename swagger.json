@@ -1,0 +1,170 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ArtCatalog Team 8 API",
+    "version": "1.0.0",
+    "description": "REST API for managing artists and artworks with GitHub OAuth authentication."
+  },
+  "servers": [
+    { "url": "http://localhost:3000" },
+    { "url": "https://your-render-app.onrender.com" }
+  ],
+  "paths": {
+    "/artists": {
+      "get": {
+        "summary": "List all artists",
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "summary": "Create a new artist",
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/artists/{id}": {
+      "get": {
+        "summary": "Get one artist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "summary": "Update an artist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Updated" },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" }
+        }
+      },
+      "delete": {
+        "summary": "Delete an artist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Deleted" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/artworks": {
+      "get": {
+        "summary": "List all artworks",
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "summary": "Create a new artwork",
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/artworks/{id}": {
+      "get": {
+        "summary": "Get one artwork",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "summary": "Update an artwork",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Updated" },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" }
+        }
+      },
+      "delete": {
+        "summary": "Delete an artwork",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Deleted" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/auth/github": {
+      "get": {
+        "summary": "Start GitHub login",
+        "responses": { "302": { "description": "Redirect to GitHub" } }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "summary": "GitHub OAuth callback",
+        "responses": {
+          "200": { "description": "Login successful" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "Get current user",
+        "responses": {
+          "200": { "description": "User info" },
+          "401": { "description": "Not authenticated" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "summary": "Logout current user",
+        "responses": { "200": { "description": "Logged out" } }
+      }
+    }
+  }
+}
