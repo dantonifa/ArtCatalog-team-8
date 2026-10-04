@@ -176,7 +176,7 @@
     
     "/auth/logout": {
       "get": {
-        "summary": "Admin Logout",
+        "summary": "Logout",
         "responses": { "200": { "description": "Logged out" } }
       }
     },
