@@ -32,11 +32,6 @@
     "/artists/{id}": {
       "get": {
         "summary": "Get one artist",
-        "security": [
-        {
-          "cookieAuth": []
-        }
-      ],
         "parameters": [
           {
             "name": "id",
@@ -115,11 +110,6 @@
     "/artworks/{id}": {
       "get": {
         "summary": "Get one artwork",
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -178,23 +168,15 @@
     },
     "/auth/github": {
       "get": {
-        "summary": "Start GitHub login",
+        "summary": "Admin GitHub Login",
         
         "responses": { "302": { "description": "Redirect to GitHub" } }
       }
     },
-    "/auth/github/callback": {
-      "get": {
-        "summary": "GitHub OAuth callback",
-        "responses": {
-          "200": { "description": "Login successful" },
-          "401": { "description": "Unauthorized" }
-        }
-      }
-    },
+    
     "/auth/me": {
       "get": {
-        "summary": "Get current user",
+        "summary": "Current Authenticated User",
         "responses": {
           "200": { "description": "User info" },
           "401": { "description": "Not authenticated" }
