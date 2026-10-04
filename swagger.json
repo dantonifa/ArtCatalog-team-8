@@ -174,18 +174,9 @@
       }
     },
     
-    "/auth/me": {
-      "get": {
-        "summary": "Current Authenticated User",
-        "responses": {
-          "200": { "description": "User info" },
-          "401": { "description": "Not authenticated" }
-        }
-      }
-    },
     "/auth/logout": {
       "get": {
-        "summary": "Logout current user",
+        "summary": "Admin Logout",
         "responses": { "200": { "description": "Logged out" } }
       }
     },
