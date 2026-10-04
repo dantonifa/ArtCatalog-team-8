@@ -20,11 +20,8 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    res.json({
-      message: "Login successful",
-      user: req.user,
-    });
-  },
+    res.redirect("/api-docs");
+  }
 );
 
 // Current User

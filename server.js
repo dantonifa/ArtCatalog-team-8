@@ -43,9 +43,50 @@ app.use(passport.session());
 
 // Home route
 app.get("/", (req, res) => {
-  res.json({
-    message: "Welcome to the Art Catalog API",
-  });
+  res.send(`
+    <html>
+      <head>
+        <title>ArtCatalog API</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+          }
+
+          .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 18px;
+            color: white;
+          }
+
+          .github {
+            background: #24292f;
+          }
+
+          .swagger {
+            background: #85ea2d;
+            color: black;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>ArtCatalog Team 8 API</h1>
+
+        <a class="btn github" href="/auth/github">
+          Login with GitHub
+        </a>
+
+        <a class="btn swagger" href="/api-docs">
+          Open Swagger Documentation
+        </a>
+      </body>
+    </html>
+  `);
 });
 
 // API Routes
@@ -59,42 +100,6 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, {
     customSiteTitle: "ArtCatalog API",
-
-    customCss: `
-      .swagger-ui .topbar-wrapper::after {
-        content: '';
-      }
-
-      .github-login-btn {
-        background: #24292f;
-        color: white !important;
-        padding: 8px 16px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-        margin-left: 20px;
-      }
-    `,
-
-    customJs: `
-      window.onload = function() {
-        const interval = setInterval(() => {
-          const topbar = document.querySelector('.topbar-wrapper');
-
-          if (topbar && !document.querySelector('.github-login-btn')) {
-            const btn = document.createElement('a');
-
-            btn.href = '/auth/github';
-            btn.innerText = 'Login with GitHub';
-            btn.className = 'github-login-btn';
-
-            topbar.appendChild(btn);
-
-            clearInterval(interval);
-          }
-        }, 500);
-      };
-    `
   })
 );
 
