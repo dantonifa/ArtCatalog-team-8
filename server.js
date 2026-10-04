@@ -54,7 +54,49 @@ app.use("/artists", artistRoutes);
 app.use("/artworks", artworkRoutes);
 
 // Swagger Documentation
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, {
+    customSiteTitle: "ArtCatalog API",
+
+    customCss: `
+      .swagger-ui .topbar-wrapper::after {
+        content: '';
+      }
+
+      .github-login-btn {
+        background: #24292f;
+        color: white !important;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-left: 20px;
+      }
+    `,
+
+    customJs: `
+      window.onload = function() {
+        const interval = setInterval(() => {
+          const topbar = document.querySelector('.topbar-wrapper');
+
+          if (topbar && !document.querySelector('.github-login-btn')) {
+            const btn = document.createElement('a');
+
+            btn.href = '/auth/github';
+            btn.innerText = 'Login with GitHub';
+            btn.className = 'github-login-btn';
+
+            topbar.appendChild(btn);
+
+            clearInterval(interval);
+          }
+        }, 500);
+      };
+    `
+  })
+);
 
 // Error Handler
 app.use(errorHandler);
