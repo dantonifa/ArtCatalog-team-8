@@ -42,8 +42,8 @@ const logout = (req, res, next) => {
       // Clear the session cookie
       res.clearCookie("connect.sid");
 
-      // ====== THE FIX: Redirect to the home page route ("/") instead of sending JSON ======
-      res.redirect("/");
+      // Redirect the user's browser back to the homepage
+      return res.redirect("/");
     });
   });
 };
