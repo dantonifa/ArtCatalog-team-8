@@ -20,16 +20,21 @@ const swaggerDocument = require("./swagger.json");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Parse JSON bodies
+app.set("trust proxy", 1);
+
 app.use(express.json());
 
-// Sessions
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-  }),
+    cookie: {
+      secure: true,
+      httpOnly: true,
+      sameSite: "none"
+    }
+  })
 );
 
 // Passport

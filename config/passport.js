@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "/auth/github/callback",
+      callbackURL: "https://artcatalog-team-8.onrender.com/auth/github/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
