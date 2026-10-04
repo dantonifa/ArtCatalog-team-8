@@ -14,9 +14,14 @@
       "get": {
         "summary": "List all artists",
         "responses": { "200": { "description": "OK" } }
-      },
+        },
       "post": {
         "summary": "Create a new artist",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "responses": {
           "201": { "description": "Created" },
           "400": { "description": "Validation error" },
@@ -27,6 +32,11 @@
     "/artists/{id}": {
       "get": {
         "summary": "Get one artist",
+        "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
         "parameters": [
           {
             "name": "id",
@@ -42,6 +52,11 @@
       },
       "put": {
         "summary": "Update an artist",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -58,6 +73,11 @@
       },
       "delete": {
         "summary": "Delete an artist",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -80,6 +100,11 @@
       },
       "post": {
         "summary": "Create a new artwork",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "responses": {
           "201": { "description": "Created" },
           "400": { "description": "Validation error" },
@@ -90,6 +115,11 @@
     "/artworks/{id}": {
       "get": {
         "summary": "Get one artwork",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -105,6 +135,11 @@
       },
       "put": {
         "summary": "Update an artwork",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -121,6 +156,11 @@
       },
       "delete": {
         "summary": "Delete an artwork",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -139,6 +179,7 @@
     "/auth/github": {
       "get": {
         "summary": "Start GitHub login",
+        
         "responses": { "302": { "description": "Redirect to GitHub" } }
       }
     },
@@ -165,6 +206,15 @@
         "summary": "Logout current user",
         "responses": { "200": { "description": "Logged out" } }
       }
+    },
+    "components": {
+  "securitySchemes": {
+    "cookieAuth": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "connect.sid"
     }
+  }
+}
   }
 }
