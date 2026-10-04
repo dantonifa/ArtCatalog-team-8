@@ -39,11 +39,11 @@ const logout = (req, res, next) => {
         });
       }
 
+      // Clear the session cookie
       res.clearCookie("connect.sid");
 
-      res.status(200).json({
-        message: "Logged out successfully",
-      });
+      // ====== THE FIX: Redirect to the home page route ("/") instead of sending JSON ======
+      res.redirect("/");
     });
   });
 };
