@@ -29,6 +29,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// ==========================================
+// ====== ALL ROUTES ========================
+// ==========================================
+
 // Home route
 app.get("/", (req, res) => {
   res.send(`
@@ -53,4 +57,33 @@ app.get("/", (req, res) => {
     </body>
     </html>
   `);
+});
+
+// Mounted feature routes
+app.use("/auth", authRoutes);
+app.use("/artists", artistRoutes);
+app.use("/artworks", artworkRoutes);
+
+// Swagger Documentation Route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// ==========================================
+// ====== GLOBAL ERROR HANDLER ==============
+// ==========================================
+// (Must be loaded AFTER all routes are registered)
+app.use(errorHandler);
+
+// ==========================================
+// ====== INITIALIZE DATABASE & START =======
+// ==========================================
+initDb((err) => {
+  if (err) {
+    console.error("❌ Database initialization failed:", err);
+    process.exit(1); 
+  } else {
+    // Start listening on the port Render gives you
+    app.listen(PORT, () => {
+      console.log(`🚀 Server successfully running on port ${PORT}`);
+    });
+  }
 });
