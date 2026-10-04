@@ -44,47 +44,50 @@ app.use(passport.session());
 // Home route
 app.get("/", (req, res) => {
   res.send(`
+    <!DOCTYPE html>
     <html>
-      <head>
-        <title>ArtCatalog API</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
-          }
+    <head>
+      <title>ArtCatalog Team 8 API</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          margin-top: 100px;
+        }
 
-          .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            margin: 10px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 18px;
-            color: white;
-          }
+        h1 {
+          margin-bottom: 20px;
+        }
 
-          .github {
-            background: #24292f;
-          }
+        p {
+          color: #555;
+          margin-bottom: 30px;
+        }
 
-          .swagger {
-            background: #85ea2d;
-            color: black;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>ArtCatalog Team 8 API</h1>
+        .btn {
+          display: inline-block;
+          padding: 12px 24px;
+          background-color: #85ea2d;
+          color: black;
+          text-decoration: none;
+          border-radius: 6px;
+          font-size: 18px;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>ArtCatalog Team 8 API</h1>
 
-        <a class="btn github" href="/auth/github">
-          Login with GitHub
-        </a>
+      <p>
+        Browse artists and artworks through the Swagger documentation.
+        Administrative actions require GitHub authentication.
+      </p>
 
-        <a class="btn swagger" href="/api-docs">
-          Open Swagger Documentation
-        </a>
-      </body>
+      /api-docs
+        Open API Documentation
+      </a>
+    </body>
     </html>
   `);
 });

@@ -3,7 +3,8 @@
   "info": {
     "title": "ArtCatalog Team 8 API",
     "version": "1.0.0",
-    "description": "REST API for managing artists and artworks with GitHub OAuth authentication."
+    "description": "Public GET routes are available to everyone. 
+    Administrative POST, PUT and DELETE operations require GitHub authentication."
   },
   "servers": [
     { "url": "http://localhost:3000" },
