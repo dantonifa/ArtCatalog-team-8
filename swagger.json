@@ -3,8 +3,7 @@
   "info": {
     "title": "ArtCatalog Team 8 API",
     "version": "1.0.0",
-    "description": "Public GET routes are available to everyone. 
-    Administrative POST, PUT and DELETE operations require GitHub authentication."
+    "description": "Public GET routes are available to everyone.Administrative POST, PUT and DELETE operations require GitHub authentication."
   },
   "servers": [
     { "url": "http://localhost:3000" },
