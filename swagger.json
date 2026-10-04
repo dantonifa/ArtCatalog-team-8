@@ -7,7 +7,7 @@
   },
   "servers": [
     { "url": "http://localhost:3000" },
-    { "url": "https://your-render-app.onrender.com" }
+    { "url": "https://artcatalog-team-8.onrender.com" }
   ],
   "paths": {
     "/artists": {
