@@ -11,8 +11,8 @@ const initDb = async (callback) => {
   try {
     const client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
-    db = client.db();
-    console.log("Database connected");
+    db = client.db("artcatalogteam8");
+    console.log("Database Name:", db.databaseName);
     callback(null, db);
   } catch (err) {
     callback(err);
