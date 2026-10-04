@@ -26,12 +26,19 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
+// controllers/auth.js
+
 const logout = (req, res, next) => {
+  // 1. Log out from Passport first
   req.logout((err) => {
     if (err) {
       return next(err);
     }
 
+    // 2. Clear the browser cookie immediately
+    res.clearCookie("connect.sid");
+
+    // 3. Destroy the session store
     req.session.destroy((sessionErr) => {
       if (sessionErr) {
         return res.status(500).json({
@@ -39,10 +46,7 @@ const logout = (req, res, next) => {
         });
       }
 
-      // Clear the session cookie
-      res.clearCookie("connect.sid");
-
-      // Redirect the user's browser back to the homepage
+      // 4. Force the user's browser back to your home landing page
       return res.redirect("/");
     });
   });
@@ -52,3 +56,4 @@ module.exports = {
   getCurrentUser,
   logout,
 };
+
