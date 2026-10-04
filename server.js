@@ -84,7 +84,7 @@ app.get("/", (req, res) => {
         Administrative actions require GitHub authentication.
       </p>
 
-      /api-docs
+      <a class="btn" href="/api-docs">
         Open API Documentation
       </a>
     </body>
