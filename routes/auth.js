@@ -6,9 +6,10 @@ const router = express.Router();
 const authController = require("../controllers/auth");
 
 // Login
-router.get("/github", (req, res) => {
-  res.redirect("https://github.com/login");
-});
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
 
 // Callback
 router.get(
