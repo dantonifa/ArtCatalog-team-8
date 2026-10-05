@@ -44,6 +44,27 @@ app.use(passport.session());
 // ==========================================
 
 app.get("/", (req, res) => {
+  const isLoggedIn =
+    req.isAuthenticated &&
+    req.isAuthenticated();
+
+  const authButton = isLoggedIn
+    ? `
+      /auth/logout
+        Logout
+      </a>
+    `
+    : `
+      /auth/github
+        Admin Login
+      </a>
+    `;
+
+  const adminInfo =
+    isLoggedIn && req.user?.role === "admin"
+      ? `<p><strong>Logged in as Administrator: ${req.user.username}</strong></p>`
+      : "";
+
   res.send(`
     <!DOCTYPE html>
     <html>
@@ -62,7 +83,7 @@ app.get("/", (req, res) => {
 
         p {
           color: #555;
-          margin-bottom: 30px;
+          margin-bottom: 20px;
         }
 
         .btn {
@@ -76,6 +97,10 @@ app.get("/", (req, res) => {
           font-weight: bold;
           margin: 10px;
         }
+
+        .btn:hover {
+          background-color: #70c325;
+        }
       </style>
     </head>
 
@@ -87,13 +112,13 @@ app.get("/", (req, res) => {
         Administrative actions require GitHub authentication.
       </p>
 
-      <a class="btn" href="/api-docs">
+      ${adminInfo}
+
+      /api-docs
         Open API Documentation
       </a>
 
-      <a class="btn" href="/auth/github">
-        Admin Login
-      </a>
+      ${authButton}
     </body>
     </html>
   `);

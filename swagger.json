@@ -32,8 +32,8 @@
 
     "/auth/logout": {
       "get": {
-        "summary": "Logout current user",
-        "description": "Logs out the current authenticated user and destroys the session.",
+        "summary": "Logout",
+        "description": "Logs out the current session.",
         "responses": {
           "200": {
             "description": "Successfully logged out"
