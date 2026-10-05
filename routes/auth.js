@@ -1,31 +1,25 @@
 const express = require("express");
-require("../config/passport");
-const passport = require("passport");
-
-const router = express.Router();
+const passport = require("../config/passport");
 const authController = require("../controllers/auth");
 
-// Login
+const router = express.Router();
+
+// Step 1: send the user to GitHub's authorize page
 router.get(
   "/github",
   passport.authenticate("github", { scope: ["user:email"] })
 );
 
-// Callback
+// Step 2: GitHub returns here, then go to Swagger
 router.get(
   "/github/callback",
-  passport.authenticate("github", {
-    failureRedirect: "/",
-  }),
+  passport.authenticate("github", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect("/api-docs");
+    req.session.save(() => res.redirect("/api-docs"));
   }
 );
 
-// Current User
 router.get("/me", authController.getCurrentUser);
-
-// Logout
 router.get("/logout", authController.logout);
 
 module.exports = router;

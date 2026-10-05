@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
 
 require("./config/passport");
@@ -22,16 +23,22 @@ app.set("trust proxy", 1);
 
 app.use(express.json());
 
+// Sessions stored in MongoDB: Render restarts no longer log you out
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      collectionName: "sessions",
+    }),
     cookie: {
       secure: true,
       httpOnly: true,
-      sameSite: "none"
-    }
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
   })
 );
 
@@ -44,17 +51,15 @@ app.use(passport.session());
 // ==========================================
 
 app.get("/", (req, res) => {
-  const isLoggedIn =
-    req.isAuthenticated &&
-    req.isAuthenticated();
+  const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
 
   const authButton = isLoggedIn
-  ? `
+    ? `
       <a class="btn" href="/auth/logout">
         Logout
       </a>
     `
-  : `
+    : `
       <a class="btn" href="/auth/github">
         Admin Login
       </a>
@@ -136,11 +141,7 @@ app.use("/artworks", artworkRoutes);
 // ====== SWAGGER ============================
 // ==========================================
 
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument)
-);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // ==========================================
 // ====== GLOBAL ERROR HANDLER ===============

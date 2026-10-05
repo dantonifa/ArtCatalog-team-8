@@ -3,7 +3,6 @@ const GitHubStrategy = require("passport-github2").Strategy;
 const { ObjectId } = require("mongodb");
 const { getDatabase } = require("../data/database");
 
-// GitHub OAuth strategy
 passport.use(
   new GitHubStrategy(
     {
@@ -13,58 +12,48 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const db = getDatabase();
-        const users = db.collection("users");
+        const users = getDatabase().collection("users");
 
-        // Look for existing user
-        let user = await users.findOne({
-          oauthProvider: "github",
-          oauthId: String(profile.id),
-        });
+        // Role is recalculated on EVERY login
+        const role =
+          profile.username === process.env.ADMIN_GITHUB_USERNAME
+            ? "admin"
+            : "user";
 
-        if (!user) {
-          // First-time login → create user
-          const newUser = {
-            oauthProvider: "github",
-            oauthId: String(profile.id),
-            username: profile.username,
-            displayName: profile.displayName || profile.username,
-            email: profile.emails?.[0]?.value || null,
-            role:profile.username === process.env.ADMIN_GITHUB_USERNAME
-                ? "admin"
-                : "user",
-            createdAt: new Date(),
-            lastLoginAt: new Date(),
-          };
-          const result = await users.insertOne(newUser);
-          user = { _id: result.insertedId, ...newUser };
-        } else {
-          // Existing user → update last login
-          await users.updateOne(
-            { _id: user._id },
-            { $set: { lastLoginAt: new Date() } },
-          );
-          user.lastLoginAt = new Date();
-        }
+        const result = await users.findOneAndUpdate(
+          { oauthProvider: "github", oauthId: String(profile.id) },
+          {
+            $set: {
+              username: profile.username,
+              displayName: profile.displayName || profile.username,
+              email: profile.emails?.[0]?.value || null,
+              role,
+              lastLoginAt: new Date(),
+            },
+            $setOnInsert: {
+              oauthProvider: "github",
+              oauthId: String(profile.id),
+              createdAt: new Date(),
+            },
+          },
+          { upsert: true, returnDocument: "after" }
+        );
 
+        // Works for both mongodb driver v5 (returns doc) and v6 (returns { value })
+        const user = result && result.value !== undefined ? result.value : result;
         return done(null, user);
       } catch (err) {
         return done(err, null);
       }
-    },
-  ),
+    }
+  )
 );
 
-// Serialize only the user ID into the session
-passport.serializeUser((user, done) => {
-  done(null, user._id.toString());
-});
+passport.serializeUser((user, done) => done(null, user._id.toString()));
 
-// Deserialize user from DB on each request
 passport.deserializeUser(async (id, done) => {
   try {
-    const db = getDatabase();
-    const user = await db
+    const user = await getDatabase()
       .collection("users")
       .findOne({ _id: new ObjectId(id) });
     done(null, user);
