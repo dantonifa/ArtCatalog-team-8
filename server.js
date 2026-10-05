@@ -80,21 +80,24 @@ app.get("/", (req, res) => {
     </head>
 
     <body>
-  <h1>ArtCatalog Team 8 API</h1>
+      <h1>ArtCatalog Team 8 API</h1>
 
-  <p>
-    Browse artists and artworks through the Swagger documentation.
-    Administrative actions require GitHub authentication.
-  </p>
+      <p>
+        Browse artists and artworks through the Swagger documentation.
+        Administrative actions require GitHub authentication.
+      </p>
 
-  <a class="btn" href="/api-docs">
-    Open API Documentation
-  </a>
+      /api-docs
+        Open API Documentation
+      </a>
 
-  <a class="btn" href="/auth/github">
-    Admin Login
-  </a>
-</body>
+      /auth/github
+        Admin Login
+      </a>
+    </body>
+    </html>
+  `);
+});
 
 // ==========================================
 // ====== FEATURE ROUTES =====================
