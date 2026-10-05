@@ -6,13 +6,13 @@
     "description": "Public GET routes are available to everyone. Administrative POST, PUT, and DELETE operations require GitHub authentication."
   },
   "servers": [
-    {
-      "url": "http://localhost:3000"
-    },
-    {
-      "url": "https://artcatalog-team-8.onrender.com"
-    }
-  ],
+  {
+    "url": "http://localhost:3000"
+  },
+  {
+    "url": "https://artcatalog-team-8.onrender.com"
+  }
+],
   "paths": {
     "/auth/github": {
       "get": {
