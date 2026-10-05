@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "https://artcatalog-team-8.onrender.com/auth/github/callback",
+      callbackURL: process.env.CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -27,9 +27,12 @@ passport.use(
           const newUser = {
             oauthProvider: "github",
             oauthId: String(profile.id),
+            username: profile.username,
             displayName: profile.displayName || profile.username,
             email: profile.emails?.[0]?.value || null,
-            role: "user", // default role
+            role:profile.username === process.env.ADMIN_GITHUB_USERNAME
+                ? "admin"
+                : "user",
             createdAt: new Date(),
             lastLoginAt: new Date(),
           };
