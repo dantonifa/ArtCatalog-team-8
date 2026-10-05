@@ -154,17 +154,18 @@
         "responses": { "302": { "description": "Redirects to /api-docs on success" } }
       }
     },
+    
     "/auth/logout": {
-    "get": {
-      "summary": "Logout and return to home page",
-      "responses": {
-        "302": {
-          "description": "Logged out and redirected to the home page"
+      "get": {
+        "summary": "Logout and return to home page",
+        "responses": {
+          "302": {
+            "description": "Logged out and redirected to the home page"
+          }
         }
       }
     }
   },
-
   "components": {
     "securitySchemes": {
       "cookieAuth": {
