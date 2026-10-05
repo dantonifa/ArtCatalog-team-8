@@ -20,7 +20,7 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    res.redirect("/");
+    res.redirect("/api-docs");
   }
 );
 
