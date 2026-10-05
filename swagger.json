@@ -3,7 +3,7 @@
   "info": {
     "title": "ArtCatalog Team 8 API",
     "version": "1.0.0",
-    "description": "Public GET routes are available to everyone. Administrative POST, PUT and DELETE operations require GitHub authentication."
+    "description": "Public GET routes are available to everyone. Administrative POST, PUT, and DELETE operations require GitHub authentication."
   },
   "servers": [
     {
@@ -14,12 +14,51 @@
     }
   ],
   "paths": {
+    "/auth/github": {
+      "get": {
+        "summary": "GitHub OAuth Login",
+        "description": "Starts GitHub authentication.",
+        "responses": {
+          "302": {
+            "description": "Redirect to GitHub"
+          }
+        }
+      }
+    },
+
+    "/auth/me": {
+      "get": {
+        "summary": "Current Authenticated User",
+        "description": "Returns information about the currently authenticated user.",
+        "responses": {
+          "200": {
+            "description": "Authenticated user"
+          },
+          "401": {
+            "description": "Not authenticated"
+          }
+        }
+      }
+    },
+
+    "/auth/logout": {
+      "get": {
+        "summary": "Logout current user",
+        "description": "Logs out the current authenticated user and destroys the session.",
+        "responses": {
+          "200": {
+            "description": "Successfully logged out"
+          }
+        }
+      }
+    },
+
     "/artists": {
       "get": {
         "summary": "List all artists",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           }
         }
       },
@@ -32,13 +71,16 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Artist created"
           },
           "400": {
             "description": "Validation error"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Admin access required"
           }
         }
       }
@@ -59,10 +101,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Artist not found"
           }
         }
       },
@@ -85,8 +127,188 @@
         ],
         "responses": {
           "200": {
-            "description": "Updated"
+            "description": "Artist updated"
           },
           "400": {
             "description": "Validation error"
-  
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "Artist not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an artist",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artist deleted"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "Artist not found"
+          }
+        }
+      }
+    },
+
+    "/artworks": {
+      "get": {
+        "summary": "List all artworks",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new artwork",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Artwork created"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Admin access required"
+          }
+        }
+      }
+    },
+
+    "/artworks/{id}": {
+      "get": {
+        "summary": "Get one artwork",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Artwork not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an artwork",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artwork updated"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "Artwork not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an artwork",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artwork deleted"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "Artwork not found"
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "connect.sid"
+      }
+    }
+  }
+}
