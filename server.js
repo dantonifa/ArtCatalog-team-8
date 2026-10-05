@@ -65,7 +65,60 @@ app.use("/artists", artistRoutes);
 app.use("/artworks", artworkRoutes);
 
 // Swagger Documentation Route
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const swaggerOptions = {
+  customJsStr: `
+    (function () {
+      function setupLogoutButton() {
+        const logoutOperation = document.querySelector(
+          '.opblock[data-path="/auth/logout"]'
+        );
+
+        if (!logoutOperation) {
+          return;
+        }
+
+        const executeButton = logoutOperation.querySelector(
+          '.execute-wrapper .execute'
+        );
+
+        if (!executeButton || executeButton.dataset.logoutRedirectAttached) {
+          return;
+        }
+
+        executeButton.dataset.logoutRedirectAttached = "true";
+
+        executeButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          // Perform a normal browser navigation.
+          // This allows /auth/logout to execute and its
+          // res.redirect("/") to take the browser to the home page.
+          window.location.href = "/auth/logout";
+        }, true);
+      }
+
+      // Swagger UI renders its operations dynamically,
+      // so watch for the logout operation to appear.
+      const observer = new MutationObserver(setupLogoutButton);
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+
+      // Also try immediately.
+      setupLogoutButton();
+    })();
+  `
+};
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, swaggerOptions)
+);
+
 
 // ==========================================
 // ====== GLOBAL ERROR HANDLER ==============
