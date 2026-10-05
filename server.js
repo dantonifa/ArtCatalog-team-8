@@ -49,13 +49,13 @@ app.get("/", (req, res) => {
     req.isAuthenticated();
 
   const authButton = isLoggedIn
-    ? `
-      /auth/logout
+  ? `
+      <a class="btn" href="/auth/logout">
         Logout
       </a>
     `
-    : `
-      /auth/github
+  : `
+      <a class="btn" href="/auth/github">
         Admin Login
       </a>
     `;
@@ -114,7 +114,7 @@ app.get("/", (req, res) => {
 
       ${adminInfo}
 
-      /api-docs
+      <a class="btn" href="/api-docs">
         Open API Documentation
       </a>
 
