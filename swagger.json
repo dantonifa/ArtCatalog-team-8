@@ -14,18 +14,7 @@
   }
 ],
   "paths": {
-    "/auth/github": {
-      "get": {
-        "summary": "GitHub OAuth Login",
-        "description": "Starts GitHub authentication.",
-        "responses": {
-          "302": {
-            "description": "Redirect to GitHub"
-          }
-        }
-      }
-    },
-
+    
     "/auth/me": {
       "get": {
         "summary": "Current Authenticated User",
