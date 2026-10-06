@@ -15,7 +15,8 @@ router.get(
   "/github/callback",
   passport.authenticate("github", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect("/");
+    // Login succeeded: the session cookie is already set, so go straight to Swagger
+    res.redirect("/api-docs");
   },
 );
 
