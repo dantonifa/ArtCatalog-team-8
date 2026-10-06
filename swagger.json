@@ -211,13 +211,31 @@
     "schemas": {
       "Artist": {
         "type": "object",
-        "required": ["name", "bio", "birthYear"],
+        "required": [
+          "name",
+          "bio",
+          "birthYear",
+          "country"
+        ],
         "properties": {
-          "name": { "type": "string", "example": "Vincent van Gogh" },
-          "bio": { "type": "string", "example": "Post-Impressionist painter" },
-          "birthYear": { "type": "integer", "example": 1853 }
+          "name": {
+            "type": "string",
+            "example": "Vincent van Gogh"
+          },
+          "bio": {
+            "type": "string",
+            "example": "Post-Impressionist painter known for expressive brushwork."
+          },
+          "birthYear": {
+            "type": "integer",
+            "example": 1853
+          },
+          "country": {
+            "type": "string",
+            "example": "Netherlands"
+          }
         }
-      },
+      }
       "Artwork": {
         "type": "object",
         "required": [
