@@ -1,3 +1,4 @@
+// data/database.js
 const { MongoClient } = require("mongodb");
 
 let db;
@@ -11,8 +12,11 @@ const initDb = async (callback) => {
   try {
     const client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
+    
+    // Explicitly target your deployment cluster database space
     db = client.db("artcatalogteam8");
-    console.log("Database Name:", db.databaseName);
+    
+    console.log("🚀 MongoDB Connected! Active Database Workspace:", db.databaseName);
     callback(null, db);
   } catch (err) {
     callback(err);
@@ -20,7 +24,7 @@ const initDb = async (callback) => {
 };
 
 const getDatabase = () => {
-  if (!db) throw Error("Database not initialized");
+  if (!db) throw Error("Database connection has not been initialized yet.");
   return db;
 };
 

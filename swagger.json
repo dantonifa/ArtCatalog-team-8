@@ -6,282 +6,170 @@
     "description": "Public GET routes are available to everyone. Administrative POST, PUT, and DELETE operations require GitHub authentication."
   },
   "servers": [
-  {
-    "url": "http://localhost:3000"
-  },
-  {
-    "url": "https://artcatalog-team-8.onrender.com"
-  }
-],
+    { "url": "http://localhost:3000" },
+    { "url": "https://artcatalog-team-8.onrender.com" }
+  ],
   "paths": {
-    
     "/auth/logout": {
       "get": {
         "summary": "Logout",
         "description": "Logs out the current session.",
-        "responses": {
-          "200": {
-            "description": "Successfully logged out"
-          }
-        }
+        "responses": { "200": { "description": "Successfully logged out" } }
       }
     },
-
     "/artists": {
       "get": {
         "summary": "List all artists",
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
+        "responses": { "200": { "description": "Success" } }
       },
       "post": {
         "summary": "Create a new artist",
-        "security": [
-          {
-            "cookieAuth": []
+        "security": [{ "cookieAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Artist" } }
           }
-        ],
+        },
         "responses": {
-          "201": {
-            "description": "Artist created"
-          },
-          "400": {
-            "description": "Validation error"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Admin access required"
-          }
+          "201": { "description": "Artist created" },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Admin access required" }
         }
       }
     },
-
     "/artists/{id}": {
       "get": {
         "summary": "Get one artist",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
         "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Artist not found"
-          }
+          "200": { "description": "Success" },
+          "404": { "description": "Artist not found" }
         }
       },
       "put": {
         "summary": "Update an artist",
-        "security": [
-          {
-            "cookieAuth": []
+        "security": [{ "cookieAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Artist" } }
           }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        },
         "responses": {
-          "200": {
-            "description": "Artist updated"
-          },
-          "400": {
-            "description": "Validation error"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Admin access required"
-          },
-          "404": {
-            "description": "Artist not found"
-          }
+          "200": { "description": "Artist updated" },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Admin access required" },
+          "404": { "description": "Artist not found" }
         }
       },
       "delete": {
         "summary": "Delete an artist",
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "security": [{ "cookieAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
         "responses": {
-          "200": {
-            "description": "Artist deleted"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Admin access required"
-          },
-          "404": {
-            "description": "Artist not found"
-          }
+          "200": { "description": "Artist deleted" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Admin access required" },
+          "404": { "description": "Artist not found" }
         }
       }
     },
-
     "/artworks": {
       "get": {
         "summary": "List all artworks",
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
+        "responses": { "200": { "description": "Success" } }
       },
       "post": {
         "summary": "Create a new artwork",
-        "security": [
-          {
-            "cookieAuth": []
+        "security": [{ "cookieAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Artwork" } }
           }
-        ],
+        },
         "responses": {
-          "201": {
-            "description": "Artwork created"
-          },
-          "400": {
-            "description": "Validation error"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Admin access required"
-          }
+          "201": { "description": "Artwork created" },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Admin access required" }
         }
       }
     },
-
     "/artworks/{id}": {
       "get": {
         "summary": "Get one artwork",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
         "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Artwork not found"
-          }
+          "200": { "description": "Success" },
+          "404": { "description": "Artwork not found" }
         }
       },
       "put": {
         "summary": "Update an artwork",
-        "security": [
-          {
-            "cookieAuth": []
+        "security": [{ "cookieAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Artwork" } }
           }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        },
         "responses": {
-          "200": {
-            "description": "Artwork updated"
-          },
-          "400": {
-            "description": "Validation error"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Admin access required"
-          },
-          "404": {
-            "description": "Artwork not found"
-          }
+          "200": { "description": "Artwork updated" },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Admin access required" },
+          "404": { "description": "Artwork not found" }
         }
       },
       "delete": {
         "summary": "Delete an artwork",
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "security": [{ "cookieAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
         "responses": {
-          "200": {
-            "description": "Artwork deleted"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Admin access required"
-          },
-          "404": {
-            "description": "Artwork not found"
-          }
+          "200": { "description": "Artwork deleted" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Admin access required" },
+          "404": { "description": "Artwork not found" }
         }
       }
     }
   },
-
   "components": {
     "securitySchemes": {
       "cookieAuth": {
         "type": "apiKey",
         "in": "cookie",
         "name": "connect.sid"
+      }
+    },
+    "schemas": {
+      "Artist": {
+        "type": "object",
+        "required": ["name", "bio", "birthYear"],
+        "properties": {
+          "name": { "type": "string", "example": "Vincent van Gogh" },
+          "bio": { "type": "string", "example": "Post-Impressionist painter" },
+          "birthYear": { "type": "integer", "example": 1853 }
+        }
+      },
+      "Artwork": {
+        "type": "object",
+        "required": ["title", "artistId", "year", "medium", "dimensions", "price", "status"],
+        "properties": {
+          "title": { "type": "string", "example": "The Starry Night" },
+          "artistId": { "type": "string", "example": "65cf23ab91bc45d023456789" },
+          "year": { "type": "integer", "example": 1889 },
+          "medium": { "type": "string", "example": "Oil on canvas" },
+          "dimensions": { "type": "string", "example": "73.7 cm × 92.1 cm" },
+          "price": { "type": "number", "example": 100000000 },
+          "status": { "type": "string", "example": "On display" }
+        }
       }
     }
   }
