@@ -67,7 +67,7 @@ app.get("/", (req, res) => {
       </a>
     `
     : `
-      <a class="btn" href="https://artcatalog-team-8.onrender.com/auth/github">
+      <a class="btn" href="/auth/github">
         Admin Login
       </a>
     `;
