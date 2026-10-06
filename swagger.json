@@ -211,12 +211,7 @@
     "schemas": {
       "Artist": {
         "type": "object",
-        "required": [
-          "name",
-          "bio",
-          "birthYear",
-          "country"
-        ],
+        "required": ["name", "bio", "birthYear", "country"],
         "properties": {
           "name": {
             "type": "string",
@@ -235,7 +230,7 @@
             "example": "Netherlands"
           }
         }
-      }
+      },
       "Artwork": {
         "type": "object",
         "required": [
