@@ -10,9 +10,6 @@
     { "url": "https://artcatalog-team-8.onrender.com" }
   ],
   "paths": {
-    //Authorization for administrator
-    
-    
     "/auth/logout": {
       "get": {
         "summary": "Logout",
@@ -31,7 +28,9 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/Artist" } }
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Artist" }
+            }
           }
         },
         "responses": {
@@ -45,7 +44,14 @@
     "/artists/{id}": {
       "get": {
         "summary": "Get one artist",
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
           "200": { "description": "Success" },
           "404": { "description": "Artist not found" }
@@ -54,11 +60,20 @@
       "put": {
         "summary": "Update an artist",
         "security": [{ "cookieAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/Artist" } }
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Artist" }
+            }
           }
         },
         "responses": {
@@ -72,7 +87,14 @@
       "delete": {
         "summary": "Delete an artist",
         "security": [{ "cookieAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
           "200": { "description": "Artist deleted" },
           "401": { "description": "Unauthorized" },
@@ -92,7 +114,9 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/Artwork" } }
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Artwork" }
+            }
           }
         },
         "responses": {
@@ -106,7 +130,14 @@
     "/artworks/{id}": {
       "get": {
         "summary": "Get one artwork",
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
           "200": { "description": "Success" },
           "404": { "description": "Artwork not found" }
@@ -115,11 +146,20 @@
       "put": {
         "summary": "Update an artwork",
         "security": [{ "cookieAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/Artwork" } }
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Artwork" }
+            }
           }
         },
         "responses": {
@@ -133,7 +173,14 @@
       "delete": {
         "summary": "Delete an artwork",
         "security": [{ "cookieAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": {
           "200": { "description": "Artwork deleted" },
           "401": { "description": "Unauthorized" },
@@ -163,10 +210,21 @@
       },
       "Artwork": {
         "type": "object",
-        "required": ["title", "artistId", "year", "medium", "dimensions", "price", "status"],
+        "required": [
+          "title",
+          "artistId",
+          "year",
+          "medium",
+          "dimensions",
+          "price",
+          "status"
+        ],
         "properties": {
           "title": { "type": "string", "example": "The Starry Night" },
-          "artistId": { "type": "string", "example": "65cf23ab91bc45d023456789" },
+          "artistId": {
+            "type": "string",
+            "example": "65cf23ab91bc45d023456789"
+          },
           "year": { "type": "integer", "example": 1889 },
           "medium": { "type": "string", "example": "Oil on canvas" },
           "dimensions": { "type": "string", "example": "73.7 cm × 92.1 cm" },
