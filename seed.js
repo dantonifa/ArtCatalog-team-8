@@ -24,32 +24,37 @@ async function run() {
         name: "Vincent van Gogh",
         bio: "Post-Impressionist painter known for raw power and brushwork style.",
         birthYear: 1853,
+        country: "Netherlands",
         createdAt: new Date(),
       },
       {
         name: "Frida Kahlo",
         bio: "Mexican artist famous for compromise-free, visceral self-portraits.",
         birthYear: 1907,
+        country: "Mexico",
         createdAt: new Date(),
       },
       {
         name: "Pablo Picasso",
         bio: "Spanish pioneer who co-founded the Cubist movement.",
         birthYear: 1881,
+        country: "Spain",
         createdAt: new Date(),
       },
       {
         name: "Claude Monet",
         bio: "French Impressionist leader who captured natural light shifts.",
         birthYear: 1840,
+        country: "France",
         createdAt: new Date(),
       },
       {
         name: "Leonardo da Vinci",
         bio: "Renaissance polymath who synthesized structural arts and geometry.",
         birthYear: 1452,
+        country: "Italy",
         createdAt: new Date(),
-      }
+      },
     ]);
 
     const ids = insertedArtists.insertedIds;
@@ -105,10 +110,12 @@ async function run() {
         price: 860000000,
         status: "On display",
         createdAt: new Date(),
-      }
+      },
     ]);
 
-    console.log("✅ Database seeded successfully with rubric-compliant configurations.");
+    console.log(
+      "✅ Database seeded successfully with rubric-compliant configurations.",
+    );
   } catch (err) {
     console.error("❌ Error seeding database:", err);
   } finally {
