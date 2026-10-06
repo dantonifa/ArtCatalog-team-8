@@ -10,6 +10,9 @@
     { "url": "https://artcatalog-team-8.onrender.com" }
   ],
   "paths": {
+    //Authorization for administrator
+    
+    
     "/auth/logout": {
       "get": {
         "summary": "Logout",

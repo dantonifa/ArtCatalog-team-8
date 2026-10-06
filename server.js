@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const session = require("express-session");
-const { MongoStore } = require("connect-mongo"); // <-- use this
+const { MongoStore } = require("connect-mongo");
 const passport = require("passport");
 
 require("./config/passport");
@@ -34,22 +34,29 @@ app.use(
       collectionName: "sessions",
     }),
     cookie: {
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
-  })
+  }),
 );
 
-// Passport
+// Passport Initializations
 app.use(passport.initialize());
 app.use(passport.session());
 
 // ==========================================
+// ====== FEATURE ROUTES =====================
+// ==========================================
+// CRITICAL FIX: Loaded BEFORE home route so Express catches "/auth/github" instantly
+app.use("/auth", authRoutes);
+app.use("/artists", artistRoutes);
+app.use("/artworks", artworkRoutes);
+
+// ==========================================
 // ====== HOME ROUTE =========================
 // ==========================================
-
 app.get("/", (req, res) => {
   const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
 
@@ -130,29 +137,19 @@ app.get("/", (req, res) => {
 });
 
 // ==========================================
-// ====== FEATURE ROUTES =====================
-// ==========================================
-
-app.use("/auth", authRoutes);
-app.use("/artists", artistRoutes);
-app.use("/artworks", artworkRoutes);
-
-// ==========================================
 // ====== SWAGGER ============================
 // ==========================================
-
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // ==========================================
 // ====== GLOBAL ERROR HANDLER ===============
 // ==========================================
-
+// Loaded after routes to catch all pipeline errors
 app.use(errorHandler);
 
 // ==========================================
 // ====== INITIALIZE DATABASE & START ========
 // ==========================================
-
 initDb((err) => {
   if (err) {
     console.error("❌ Database initialization failed:", err);

@@ -16,9 +16,8 @@ passport.use(
       try {
         const users = getDatabase().collection("users");
 
-        // CRITICAL ADMIN CONVERSION:
-        // Evaluates your personal GitHub username against your environment config variable.
-        // If they match perfectly, it sets your profile role as "admin".
+        // EVALUATES ADMIN STATUS:
+        // Compares your GitHub username against your environment config variable safely.
         const role =
           profile.username === process.env.ADMIN_GITHUB_USERNAME
             ? "admin"
@@ -40,17 +39,28 @@ passport.use(
               createdAt: new Date(),
             },
           },
-          { upsert: true, returnDocument: "after" }
+          { upsert: true, returnDocument: "after" },
         );
 
-        const user = result && result.value !== undefined ? result.value : result;
+        // FIX: MongoDB Driver v6+ returns the updated document directly.
+        // This line gracefully handles both older and newer MongoDB driver versions.
+        const user =
+          result && result.value !== undefined ? result.value : result;
+
+        if (!user) {
+          return done(
+            new Error("Failed to retrieve or create user document."),
+            null,
+          );
+        }
+
         return done(null, user);
       } catch (err) {
         console.error("❌ Passport strategy error:", err);
         return done(err, null);
       }
-    }
-  )
+    },
+  ),
 );
 
 // Standard session serialization handlers to store the user ID inside the session cookie
