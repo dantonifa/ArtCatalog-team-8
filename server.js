@@ -67,7 +67,7 @@ app.get("/", (req, res) => {
       </a>
     `
     : `
-      <a class="btn" href="/auth/github">
+      <a class="btn" href="https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=https://onrender.com">
         Admin Login
       </a>
     `;
