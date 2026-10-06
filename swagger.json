@@ -17,6 +17,16 @@
         "responses": { "200": { "description": "Successfully logged out" } }
       }
     },
+    "/auth/me": {
+      "get": {
+        "summary": "Get current authenticated user",
+        "security": [{ "cookieAuth": [] }],
+        "responses": {
+          "200": { "description": "Current user returned" },
+          "401": { "description": "Not authenticated" }
+        }
+      }
+    },
     "/artists": {
       "get": {
         "summary": "List all artists",
